@@ -12,4 +12,5 @@ export default {
   evol: (price, firstPrice) => 0 - Math.round(firstPrice / price * 100 - 100),
   memory: val => Math.round(val / 100000) / 10,
   uppercasefirst: val => val[0].toUpperCase() + val.slice(1),
+  bignbr: Intl.NumberFormat().format,
 };

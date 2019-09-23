@@ -1,6 +1,8 @@
 import 'izitoast/dist/css/iziToast.min.css';
 import izitoast from 'izitoast';
 
+const nullf = () => null;
+
 const µ = {
   request(url, callback = rs => rs, type = 'GET') {
     const xhr = new XMLHttpRequest();
@@ -34,22 +36,48 @@ const µ = {
   },
 };
 
-let list = null;
+const data = {};
 
 export default function (url) {
   return {
 
-    getList(callback) {
-      if (!list) {
-        µ.get(`${url}/?getAll`, (rs) => {
-          list = rs;
+    getPlayers(callback = nullf) {
+      if (!data.players) {
+        µ.get(`${url}/?getPlayers`, (rs) => {
+          data.players = rs;
           callback(rs);
         });
-      } else callback(list);
+      } else callback(data.players);
+    },
+
+    getPlayer(name, callback) {
+      µ.get(`${url}/?getPlayer=${name}`, callback);
+    },
+
+    getFactions(callback = nullf) {
+      if (!data.factions) {
+        µ.get(`${url}/?getFactions`, (rs) => {
+          data.factions = rs;
+          callback(rs);
+        });
+      } else callback(data.factions);
+    },
+
+    getFaction(factionUID, callback) {
+      µ.get(`${url}/?getFaction=${factionUID}`, callback);
+    },
+
+    getItems(callback = nullf) {
+      if (!data.items) {
+        µ.get(`${url}/?getItems`, (rs) => {
+          data.items = rs;
+          callback(rs);
+        });
+      } else callback(data.items);
     },
 
     getItem(itemID, callback) {
-      µ.get(`${url}/?get=${itemID}`, callback);
+      µ.get(`${url}/?getItem=${itemID}`, callback);
     },
 
   };

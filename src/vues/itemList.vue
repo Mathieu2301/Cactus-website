@@ -28,7 +28,7 @@
           @click="select(item)"
         >
           <td class="center">
-            <img :src="'/items/' + item.itemID + '-0.png'" alt="Item" style="margin: -10px 0">
+            <img class="table-icon" :src="'/items/' + item.itemID + '-0.png'" alt="Item">
           </td>
           <td class="center">{{ item.itemID | itemName }}</td>
           <td class="left">{{ item.price }}.00 €</td>
@@ -69,66 +69,6 @@
   </div>
 </template>
 
-<style scoped>
-
-.list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  box-sizing: border-box;
-  padding: 40px;
-  align-items: center;
-}
-
-.list > .container {
-  width: 100%;
-  max-width: 800px;
-}
-
-.search_bar {
-  display: block;
-  width: 100%;
-  max-width: 800px;
-
-  line-height: 40px;
-  font-size: 18px;
-  padding: 5px 15px;
-  margin-bottom: 15px;
-
-  border: none;
-  border-radius: 10px;
-
-  background-color: var(--color7);
-  color: var(--color8);
-  caret-color: var(--color8);
-  outline-style: none;
-}
-
-.mobile_table {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-}
-
-.mobile_table > .item {
-  width: 100px;
-  vertical-align: middle;
-  cursor: pointer;
-}
-
-.mobile_table > .item > img {
-  width: 40%;
-  vertical-align: middle;
-  margin: 20px 0 9px;
-}
-
-.mobile_table > .item > * {
-  margin: 5px 0;
-  font-size: 18px;
-}
-
-</style>
-
 <script>
 import components from '@/global';
 import filters from '@/filters';
@@ -138,8 +78,8 @@ export default {
   filters,
 
   created() {
-    this.api.getList((list) => {
-      this.list = list;
+    this.api.getItems((items) => {
+      this.list = items;
       this.loaded = true;
     });
   },
@@ -180,6 +120,7 @@ export default {
           text: 'ID',
           class: {
             center: true,
+            sortable: true,
           },
           sortBy: 'itemID',
         },
@@ -187,6 +128,7 @@ export default {
           text: 'Item',
           class: {
             center: true,
+            sortable: true,
           },
           sortBy: '_ITEM_NAME',
         },
@@ -194,6 +136,7 @@ export default {
           text: 'Prix',
           class: {
             left: true,
+            sortable: true,
           },
           sortBy: 'price',
         },
@@ -201,6 +144,7 @@ export default {
           text: 'Évolution',
           class: {
             left: true,
+            sortable: true,
           },
           sortBy: '_ITEM_EVOL',
         },

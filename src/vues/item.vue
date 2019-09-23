@@ -73,7 +73,7 @@ export default {
   },
 
   mounted() {
-    this.api.getItem(this.$route.params.id, (item) => {
+    this.api.getItem(this.$route.params.item_id, (item) => {
       this.trades = Object.values(item.trades);
       this.trades.reverse();
 

@@ -28,7 +28,7 @@
 <style>
 .loader {
   position: absolute;
-  top: 30%;
+  top: calc(50% - 50px);
   left: calc(50% - 30px);
 
   font-size: 30px;

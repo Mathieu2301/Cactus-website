@@ -11,10 +11,40 @@
       2.80761184 C17.0976311,3.19813614 17.0976311,3.83130112 16.7071068,
       4.22182541 L8.92893219,12 Z"></path>
     </g></svg>
-    <div class="title" v-if="!$route.params.id">{{ $route.name }}</div>
-    <div class="title" v-else>
-      <img :src="'/items/' + $route.params.id + '-0.png'" alt="Item" style="margin: -5px 5px">
-      {{ $route.params.id | itemName }}
+
+    <div class="title" v-if="$route.params.item_id">
+      <img :src="'/items/' + $route.params.item_id + '-0.png'" alt="Item" style="margin: -5px 5px">
+      {{ $route.params.item_id | itemName }}
+    </div>
+
+    <div class="title" v-else-if="$route.params.player_name">
+      <img
+        :src="'//minotar.net/avatar/' + $route.params.player_name + '/32'"
+        alt="Player head"
+        style="margin: -5px 5px"
+      >
+      {{ $route.params.player_name }}
+    </div>
+
+    <!-- <div class="title" v-else-if="$route.params.faction_id">
+      {{ $route.params.faction_id | factionName }}
+    </div> -->
+
+    <div class="title" v-else>{{ $route.name }}</div>
+
+    <div class="navbar">
+      <router-link
+        tag="div"
+        v-for="navbtn in nav"
+        :key="navbtn.path"
+        :to="navbtn.path"
+        :class="{
+          nav: true,
+          activ: $route.path == navbtn.path
+        }"
+      >
+        {{ navbtn.text }}
+      </router-link>
     </div>
 
   </header>
@@ -25,6 +55,29 @@ import filters from '@/filters';
 
 export default {
   filters,
+
+  data() {
+    return {
+      nav: [
+        {
+          text: 'Accueil',
+          path: '/',
+        },
+        {
+          text: 'Items',
+          path: '/items',
+        },
+        {
+          text: 'Joueurs',
+          path: '/players',
+        },
+        {
+          text: 'Factions',
+          path: '/factions',
+        },
+      ],
+    };
+  },
 
   methods: {
     navigate() {
@@ -38,25 +91,51 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 header {
   background-color: var(--color8);
-  height: 75px;
-  display: grid;
-  grid: auto / 75px auto 60px;
+  display: flex;
+  flex-wrap: wrap;
   text-align: left;
   z-index: 1000;
+}
+
+.navbar {
+  width: 100%;
+  background-color: var(--color7);
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.nav {
+  align-self: center;
+  cursor: pointer;
+  text-align: center;
+  padding: 15px;
+  opacity: 0.5;
+}
+
+@media screen and (max-width: 400px) {
+  .nav { width: 50% }
+}
+
+.nav.activ,
+.nav:hover {
+  opacity: 0.8;
 }
 
 .homebutton {
   fill: var(--color6);
   cursor: pointer;
   margin: 15px;
+  width: 40px;
 }
 
 .title {
   font-size: 30px;
-  padding: 20px 0;
-  text-shadow: 1px 4px 8px var(--color7);
+  align-self: center;
+  margin-right: 10px;
+  text-shadow: 1px 2px 4px var(--color7);
 }
 </style>
